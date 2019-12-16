@@ -90,7 +90,6 @@ class SpottedTF( ):
 		#num = interpreter.get_tensor(output_details[3]['index'])[0]  # Total number of detected objects (inaccurate and not needed)
 
 
-
 		# Pick the most probable result
 		##for nth in range(0,len(classes)):
 			##class_ = self.labels[int(classes[nth])]
@@ -99,12 +98,11 @@ class SpottedTF( ):
 			##print("   ")
 		##print("Class: " + self.labels[int(classes[0])])
 			
-			
-			
 		# Return detected value (string)
 		return self.labels[int(classes[0])]
 
 
+# Test code (not to be used in the final version)
 def main():
 	tf = SpottedTF("Sample_TFLite_model/labelmap.txt", "Sample_TFLite_model/detect.tflite")
 	
