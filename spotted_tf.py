@@ -53,8 +53,8 @@ class SpottedTF( ):
 
 		self.floating_model = (self.input_details[0]['dtype'] == np.float32)
 
-		input_mean = 127.5
-		input_std = 127.5
+		self.input_mean = 127.5
+		self.input_std = 127.5
 		
 		# Config camera
 		self.camera = PiCamera()
@@ -78,16 +78,22 @@ class SpottedTF( ):
 		
 		# Normalize pixel values if using a floating model (i.e. if model is non-quantized)
 		if self.floating_model:
-			input_data = (np.float32(input_data) - input_mean) / input_std
+			self.input_data = (np.float32(self.input_data) - self.input_mean) / self.input_std
 
 		# Perform the actual detection by running the model with the image as input
 		self.interpreter.set_tensor(self.input_details[0]['index'],self.input_data)
 		self.interpreter.invoke()
 
 		# Retrieve detection results
-		classes = self.interpreter.get_tensor(self.output_details[1]['index'])[0] # Class index of detected objects
-		scores = self.interpreter.get_tensor(self.output_details[2]['index'])[0] # Confidence of detected objects
+		#classes = self.interpreter.get_tensor(self.output_details[1]['index'])[0] # Class index of detected objects
+		#scores = self.interpreter.get_tensor(self.output_details[2]['index'])[0] # Confidence of detected objects
+		#scores2 = self.interpreter.get_tensor(self.output_details[2]['index'])[0] # Confidence of detected objects
+		#print(classes, scores2)
 		#num = interpreter.get_tensor(output_details[3]['index'])[0]  # Total number of detected objects (inaccurate and not needed)
+		scores = self.interpreter.get_tensor(self.output_details[0]['index'])[0]
+		sl = list(zip(list(scores), [x for x in range(len(scores))]))
+		sl.sort(reverse=True)
+		
 
 
 		# Pick the most probable result
@@ -99,4 +105,5 @@ class SpottedTF( ):
 		##print("Class: " + self.labels[int(classes[0])])
 			
 		# Return detected value (string)
-		return self.labels[int(classes[0])]
+		#return self.labels[int(classes[0])]
+		return self.labels[sl[0][1]]
