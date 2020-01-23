@@ -1,0 +1,33 @@
+import argparse
+import os
+from parsel import Selector
+import requests
+import subprocess
+import sys
+from PIL import Image
+import time
+
+def get_data(folder):
+    files = [os.path.join(folder,f) for f in os.listdir(os.path.join(folder)) if f[0] != '.']
+    print("size of files" + len(files))
+    img = files[0]
+    img.show()
+def augment_image(img, path, name, ext):
+    img_aux = img.transpose(Image.FLIP_LEFT_RIGHT)
+    p = os.path.join(path,name+"_flr"+ext)
+    img_aux.save(p)
+    for an in [45,90,135,180,225,270,315]:
+        img_aux = img.rotate(an)
+        p = os.path.join(path,name+"_"+str(an)+ext)
+        img_aux.save(p)
+        img_aux = img_aux.transpose(Image.FLIP_LEFT_RIGHT)
+        p = os.path.join(path,name+"_"+str(an)+"_flr"+ext)
+        img_aux.save(p)
+  
+  
+def main():
+    dataset = get_data("dataset2")
+
+
+if __name__ == "__main__":
+    main()
