@@ -1,3 +1,10 @@
-pen
-mug
-phone
+Water Bottle
+Cellotape
+Shoe
+Stapler
+Lanyard
+Mouse
+Phone
+Scissors
+Highlighter
+Pencil
