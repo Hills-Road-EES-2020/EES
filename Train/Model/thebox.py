@@ -12,7 +12,7 @@ class TheBox(tf.keras.Model):
         self.pool3 = layers.MaxPooling2D(pool_size=(2, 2), name="Pooling3")
         self.flatten = layers.Flatten()
         self.dense1 = layers.Dense(64, activation='relu', name="Dense1")
-        self.dense2 = layers.Dense(10, activation='sigmoid', name="Dense2")
+        self.dense2 = layers.Dense(3, activation='sigmoid', name="Dense2")
     
     def call(self, x):
         x = self.down1(x)
